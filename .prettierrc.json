@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "quoteProps": "consistent",
+  "arrowParens": "avoid",
+  "plugins": [
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "organizeImportsSkipDestructiveCodeActions": true,
+  "pluginSearchDirs": false,
+  "tailwindConfig": "tailwind.config.js",
+  "tailwindFunctions": ["clsx", "tv", "cva"]
+}

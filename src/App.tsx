@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Button } from './components/Button';
+import { Chip } from './components/Chip';
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <main>
+      <div className="container my-10 space-y-10 rounded-xl bg-white p-10 shadow-md">
+        <div className="flex items-center gap-6">
+          <Button variant="primary" size="sm">
+            Primary Sm
+          </Button>
+          <Button variant="secondary" size="sm">
+            Secondary Sm
+          </Button>
+          <Button variant="primary" size="md">
+            Primary Md
+          </Button>
+          <Button variant="primary" size="lg" icon="plus">
+            Primary Lg Icon
+          </Button>
+        </div>
 
-export default App
+        <div className="flex items-center gap-6">
+          <Chip>Default</Chip>
+          <Chip variant="high">High</Chip>
+          <Chip variant="medium">Medium</Chip>
+          <Chip variant="low">Low</Chip>
+
+        </div>
+      </div>
+    </main>
+  );
+}
