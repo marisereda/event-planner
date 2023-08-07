@@ -1,16 +1,27 @@
 import clsx from 'clsx';
+import { useState } from 'react';
 import { CATEGORIES, PRIORITIES } from '../constants';
+import { Event } from '../interfaces';
 import { Button } from './Button';
 import { DatePicker } from './DatePicker';
 import { Input } from './Input';
 import { Select } from './Select';
 import { Textarea } from './Textarea';
+import { TimePicker } from './TimePicker';
 
 interface EventFormProps {
   className?: string;
+  event?: Event;
 }
 
-export function EventForm({ className }: EventFormProps) {
+export function EventForm({ className, event }: EventFormProps) {
+  const [title, setTitle] = useState(event?.title ?? '');
+  const [description, setDescription] = useState(event?.description ?? '');
+  const [dateTime, setDateTime] = useState(event?.datetime ?? new Date());
+  const [location, setLocation] = useState(event?.location ?? '');
+  const [category, setCategory] = useState(event?.category ?? CATEGORIES[0]);
+  const [priority, setPriority] = useState(event?.priority ?? PRIORITIES[0]);
+
   return (
     <form
       className={clsx(
@@ -18,27 +29,42 @@ export function EventForm({ className }: EventFormProps) {
         className,
       )}
     >
-      <div className="grid grid-cols-1 gap-5 mb-10 md:grid-flow-col md:grid-cols-2 md:grid-rows-5 md:gap-x-6 xl:mb-15 xl:grid-cols-3 xl:grid-rows-3 xl:gap-x-10">
-        <Input className="" label="Title" />
-        <Textarea className="row-span-2" label="Description" />
-        <DatePicker className="" label="Select date" value={new Date()} />
-        <Input className="" label="Select time" />
-        <Input className="" label="Location" />
-        <Select
-          className=""
-          label="Category"
-          value={CATEGORIES[0]}
-          options={CATEGORIES}
+      <div className="mb-10 grid grid-cols-1 gap-5 md:grid-flow-col md:grid-cols-2 md:grid-rows-5 md:gap-x-6 xl:mb-15 xl:grid-cols-3 xl:grid-rows-3 xl:gap-x-10">
+        <Input
+          label="Title"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
         />
-        <Input className="" label="Add picture" disabled />
+        <Textarea
+          className="row-span-2"
+          label="Description"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+        />
+        <DatePicker value={dateTime} onChange={setDateTime} />
+        <TimePicker value={dateTime} onChange={setDateTime} />
+        <Input
+          label="Location"
+          value={location}
+          onChange={e => setLocation(e.target.value)}
+        />
         <Select
-          className=""
+          label="Category"
+          value={category}
+          options={CATEGORIES}
+          onChange={setCategory}
+        />
+        <Input label="Add picture" disabled />
+        <Select
           label="Priority"
-          value={PRIORITIES[0]}
+          value={priority}
           options={PRIORITIES}
+          onChange={setPriority}
         />
       </div>
-      <Button className="w-full md:ml-auto md:w-auto">Add event</Button>
+      <Button className="w-full md:ml-auto md:w-auto md:min-w-[190px]">
+        {event ? 'Save' : 'Add event'}
+      </Button>
     </form>
   );
 }

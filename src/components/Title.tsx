@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
 interface TitleProps {
-  children: string;
   className?: string;
+  children: string;
 }
 
 export const Title = ({ children, className }: TitleProps) => {

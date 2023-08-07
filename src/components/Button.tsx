@@ -14,6 +14,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   icon,
+  type='button',
   children,
   ...props
 }: ButtonProps) {
@@ -32,6 +33,7 @@ export function Button({
         },
         className,
       )}
+      type={type}
       {...props}
     >
       {icon && size === 'lg' && <Icon name={icon} />}

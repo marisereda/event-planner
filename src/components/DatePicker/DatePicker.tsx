@@ -1,10 +1,10 @@
 import { Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { formatDate } from '../../helpers';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Calendar } from './Calendar';
-import { formatDate } from './helpers';
 
 interface DatePickerProps {
   className?: string;
@@ -45,7 +45,11 @@ export function DatePicker({
             <Calendar selectedDate={selectedDate} onSelect={setSelectedDate} />
 
             <div className="flex justify-end gap-4">
-              <Button variant="secondary" size="sm" onClick={() => close()}>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => close()}
+              >
                 Cancel
               </Button>
               <Button

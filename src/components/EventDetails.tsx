@@ -1,6 +1,9 @@
 import clsx from 'clsx';
-import { getChipVariant, getRandomPicrure } from '../helpers';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { formatDateTime, getChipVariant, getRandomPicrure } from '../helpers';
 import { Event } from '../interfaces';
+import { deleteEvent } from '../redux/eventsSlice';
 import { Button } from './Button';
 import { Chip } from './Chip';
 
@@ -25,14 +28,8 @@ export function EventDetails({
   const imgSrc =
     picture || getRandomPicrure({ seed: title, width: 640, height: 640 });
   const chipVariant = getChipVariant(priority);
-
-  const handleEdit = () => {
-    console.log('🚧 Edit event:', id);
-  };
-
-  const handleDelete = () => {
-    console.log('🚧 Delete event:', id);
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className={clsx('rounded-md bg-white shadow-sm', className)}>
@@ -47,19 +44,22 @@ export function EventDetails({
           <Chip>{category}</Chip>
           <Chip variant={chipVariant}>{priority}</Chip>
           {location && <Chip>{location}</Chip>}
-          <Chip>{datetime}</Chip>
+          <Chip>{formatDateTime(datetime)}</Chip>
         </div>
         <div className="flex gap-6 md:justify-end md:gap-4">
           <Button
             className="basis-1/2 text-xs md:basis-auto md:text-sm"
             variant="secondary"
-            onClick={handleEdit}
+            onClick={() => navigate(`/edit/${id}`)}
           >
             Edit
           </Button>
           <Button
             className="basis-1/2 text-xs md:basis-auto md:text-sm"
-            onClick={handleDelete}
+            onClick={() => {
+              dispatch(deleteEvent(id));
+              navigate('/');
+            }}
           >
             Delete event
           </Button>

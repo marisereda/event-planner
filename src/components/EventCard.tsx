@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { getChipVariant, getRandomPicrure } from '../helpers';
+import { useNavigate } from 'react-router-dom';
+import { formatDateTime, getChipVariant, getRandomPicrure } from '../helpers';
 import { Event } from '../interfaces';
 import { Button } from './Button';
 import { Chip } from './Chip';
@@ -25,10 +26,7 @@ export function EventCard({
   const imgSrc =
     picture || getRandomPicrure({ seed: title, width: 640, height: 640 });
   const chipVariant = getChipVariant(priority);
-
-  const handleClick = () => {
-    console.log('🚧 Goto event:', id);
-  };
+  const navigate = useNavigate();
 
   return (
     <div
@@ -38,23 +36,23 @@ export function EventCard({
       )}
     >
       <img className="h-[336px] w-full object-cover" src={imgSrc} alt={title} />
-      <div className="absolute flex gap-3 left-3 top-3">
+      <div className="absolute left-3 top-3 flex gap-3">
         <Chip>{category}</Chip>
         <Chip variant={chipVariant}>{priority}</Chip>
       </div>
-      <div className="absolute inset-x-0 bottom-0 transition-transform duration-300 translate-y-14 group-hover:translate-y-0">
-        <div className="flex items-center justify-between px-4 py-2 text-sm bg-white/80 text-accent">
-          <time>{datetime}</time>
+      <div className="absolute inset-x-0 bottom-0 translate-y-14 transition-transform duration-300 group-hover:translate-y-0">
+        <div className="flex items-center justify-between bg-white/80 px-4 py-2 text-sm text-accent">
+          <time>{formatDateTime(datetime)}</time>
           <p>{location}</p>
         </div>
         <div className="h-[200px] bg-white p-4">
           <h3 className="mb-4 font-medium">{title}</h3>
-          <p className="text-sm line-clamp-3">{description}</p>
+          <p className="line-clamp-3 text-sm">{description}</p>
         </div>
       </div>
       <Button
-        className="absolute ml-auto transition duration-300 translate-y-4 opacity-0 bottom-4 right-4 group-hover:translate-y-0 group-hover:opacity-100"
-        onClick={handleClick}
+        className="absolute bottom-4 right-4 ml-auto translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+        onClick={() => navigate(`/events/${id}`)}
       >
         More info
       </Button>

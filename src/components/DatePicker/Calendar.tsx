@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import { useState } from 'react';
-import { IconButton } from '../IconButton';
+import { WEEKDAYS } from '../../constants';
 import {
-  WEEKDAYS,
   formatMonth,
   getDaysInMonth,
   getFirstWeekday,
   isDatesSame,
-} from './helpers';
+} from '../../helpers';
+import { IconButton } from '../IconButton';
 
 interface CalendarProps {
   className?: string;

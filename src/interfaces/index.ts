@@ -13,7 +13,7 @@ export interface Event {
   id: string;
   title: string;
   description?: string;
-  datetime: string;
+  datetime: Date;
   location?: string;
   category: string;
   picture?: string;
