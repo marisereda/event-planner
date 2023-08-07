@@ -20,7 +20,7 @@ export function Button({
   return (
     <button
       className={clsx(
-        'flex items-center border border-accent font-medium  transition-colors hover:border-accent-hover active:translate-y-px disabled:border-disabled',
+        'flex items-center justify-center border border-accent font-medium transition-colors hover:border-accent-hover active:translate-y-px disabled:border-disabled',
         {
           'bg-accent text-white hover:bg-accent-hover disabled:bg-disabled':
             variant === 'primary',

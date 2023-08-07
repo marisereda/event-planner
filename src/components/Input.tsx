@@ -44,7 +44,7 @@ export function Input({
           disabled={disabled}
         />
         {error && (
-          <span className="absolute -bottom-1 right-0 translate-y-full text-xs text-error">
+          <span className="absolute right-0 text-xs translate-y-full -bottom-1 text-error">
             {error}
           </span>
         )}

@@ -29,7 +29,7 @@ export function Filter({
       value={value}
       onChange={onChange}
     >
-      <Listbox.Button className="w-full rounded-t-md p-4 shadow-sm outline-none transition-colors ui-not-open:rounded-b-md">
+      <Listbox.Button className="w-full rounded-t-md bg-white p-4 shadow-sm outline-none transition-colors ui-not-open:rounded-b-md">
         {({ open, value }) => (
           <span
             className={clsx('flex items-center justify-between gap-2', {

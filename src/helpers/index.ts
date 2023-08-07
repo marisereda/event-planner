@@ -7,7 +7,7 @@ export const getRandomPicrure = (params: {
 }) => {
   const { seed, width, height } = params;
   return seed
-    ? `https://picsum.photos/seed/${params.seed}/${params.width}/${height}`
+    ? `https://picsum.photos/seed/${seed}/${width}/${height}`
     : `https://picsum.photos/${width}/${height}`;
 };
 

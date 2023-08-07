@@ -37,7 +37,7 @@ export function EventDetails({
   return (
     <div className={clsx('rounded-md bg-white shadow-sm', className)}>
       <img
-        className="aspect-[16/10] w-full rounded-md object-cover"
+        className="aspect-[16/10] w-full rounded-md object-cover md:aspect-[5/2]"
         src={imgSrc}
         alt={title}
       />
@@ -51,13 +51,16 @@ export function EventDetails({
         </div>
         <div className="flex gap-6 md:justify-end md:gap-4">
           <Button
-            className="basis-1/2 md:basis-auto"
+            className="basis-1/2 text-xs md:basis-auto md:text-sm"
             variant="secondary"
             onClick={handleEdit}
           >
             Edit
           </Button>
-          <Button className="basis-1/2 md:basis-auto" onClick={handleDelete}>
+          <Button
+            className="basis-1/2 text-xs md:basis-auto md:text-sm"
+            onClick={handleDelete}
+          >
             Delete event
           </Button>
         </div>

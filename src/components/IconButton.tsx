@@ -1,12 +1,18 @@
 import clsx from 'clsx';
 import { ComponentPropsWithoutRef } from 'react';
-import { Icon, IconName } from './Icon';
+import { Icon, IconProps } from './Icon';
 
 interface IconButtonProps extends ComponentPropsWithoutRef<'button'> {
-  icon: IconName;
+  icon: IconProps['name'];
+  size?: IconProps['size'];
 }
 
-export function IconButton({ className, icon, ...props }: IconButtonProps) {
+export function IconButton({
+  className,
+  icon,
+  size,
+  ...props
+}: IconButtonProps) {
   return (
     <button
       className={clsx(
@@ -15,7 +21,7 @@ export function IconButton({ className, icon, ...props }: IconButtonProps) {
       )}
       {...props}
     >
-      <Icon name={icon} />
+      <Icon name={icon} size={size} />
     </button>
   );
 }

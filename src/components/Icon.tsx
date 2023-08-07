@@ -2,16 +2,21 @@ import clsx from 'clsx';
 import sprite from '../assets/icons.svg';
 import { IconName } from '../interfaces';
 
-interface IconProps {
+export interface IconProps {
   className?: string;
   name: IconName;
+  size?: 'sm' | 'md';
 }
 
-export function Icon({ className, name }: IconProps) {
+export function Icon({ className, size = 'md', name }: IconProps) {
   return (
     <svg
       className={clsx(
-        'inline-block h-6 w-6 fill-current stroke-current',
+        'inline-block fill-current stroke-current',
+        {
+          'h-6 w-6': size === 'md',
+          'h-5 w-6': size === 'sm',
+        },
         className,
       )}
     >
