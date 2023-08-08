@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { ComponentPropsWithoutRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { selectSearchKey } from '../redux/eventsSelectors';
 import { clearSearchKey, setSearchKey } from '../redux/eventsSlice';
 import { Icon } from './Icon';
@@ -14,7 +15,14 @@ export function Search({
   ...props
 }: SearchProps) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const searchKey = useSelector(selectSearchKey);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      navigate('/');
+    }
+  };
 
   return (
     <label className={clsx('relative', className)}>
@@ -23,6 +31,7 @@ export function Search({
         placeholder={placeholder}
         value={searchKey}
         onChange={e => dispatch(setSearchKey(e.target.value))}
+        onKeyDown={handleKeyDown}
         {...props}
       />
       <Icon

@@ -46,11 +46,11 @@ export function EventCard({
           <time>{formatDateTime(datetime)}</time>
           <p>{location}</p>
         </div>
-        <div className="h-[200px] bg-white p-4">
+        <div className="flex h-[200px] flex-col  bg-white p-4">
           <h3 className="mb-4 font-medium">{title}</h3>
           <p className="mb-6 line-clamp-3 text-sm">{description}</p>
           <Button
-            className="ml-auto opacity-0 transition-opacity group-hover:opacity-100"
+            className="ml-auto mt-auto opacity-0 transition-opacity group-hover:opacity-100"
             onClick={() => navigate(`/events/${id}`)}
           >
             More info
