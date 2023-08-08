@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { formatDateTime, getChipVariant, getRandomPicrure } from '../helpers';
+import { formatDateTime, getChipVariant } from '../helpers';
 import { Event } from '../interfaces';
 import { deleteEvent } from '../redux/eventsSlice';
 import { Button } from './Button';
@@ -25,9 +25,6 @@ export function EventDetails({
     priority,
   },
 }: EventDetailsProps) {
-  const imgSrc =
-    picture || getRandomPicrure({ seed: title, width: 640, height: 640 });
-  const chipVariant = getChipVariant(priority);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,15 +32,15 @@ export function EventDetails({
     <div className={clsx('rounded-md bg-white shadow-sm', className)}>
       <img
         className="aspect-[16/10] w-full rounded-md object-cover md:aspect-[5/2]"
-        src={imgSrc}
+        src={picture}
         alt={title}
       />
       <div className="px-6 pb-10 pt-6">
         <p className="mb-6 text-sm">{description}</p>
         <div className="mb-10 flex flex-wrap gap-3">
           <Chip>{category}</Chip>
-          <Chip variant={chipVariant}>{priority}</Chip>
-          {location && <Chip>{location}</Chip>}
+          <Chip variant={getChipVariant(priority)}>{priority}</Chip>
+          <Chip>{location}</Chip>
           <Chip>{formatDateTime(datetime)}</Chip>
         </div>
         <div className="flex gap-6 md:justify-end md:gap-4">

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { IconButton } from './IconButton';
 
 interface TextareaProps extends ComponentPropsWithoutRef<'textarea'> {
@@ -8,16 +8,19 @@ interface TextareaProps extends ComponentPropsWithoutRef<'textarea'> {
   onClear?: () => void;
 }
 
-export function Textarea({
-  className,
-  label,
-  error,
-  placeholder = 'Input',
-  disabled,
-  required,
-  onClear,
-  ...props
-}: TextareaProps) {
+export const Textarea = forwardRef(function Textarea(
+  props: TextareaProps,
+  ref: React.ForwardedRef<HTMLTextAreaElement>,
+) {
+  const {
+    className,
+    label,
+    error,
+    placeholder = 'Input',
+    disabled,
+    onClear,
+    ...otherProps
+  } = props;
   return (
     <label className={clsx('flex flex-col gap-1', className)}>
       <span
@@ -26,18 +29,18 @@ export function Textarea({
           disabled ? 'text-disabled' : 'text-accent',
         )}
       >
-        {required ? `${label} *` : label}
+        {label}
       </span>
       <span className="relative grow">
         <textarea
           className={clsx(
-            'peer h-full w-full resize-none rounded-md border bg-transparent py-4 pl-3 pr-5 outline-none transition-colors placeholder:text-current disabled:placeholder:text-disabled',
+            'peer h-full w-full resize-none rounded-md border bg-transparent py-4 pl-3 pr-10 outline-none transition-colors placeholder:text-current disabled:placeholder:text-disabled',
             error ? 'border-error' : 'border-divider focus:border-accent ',
           )}
+          ref={ref}
           placeholder={placeholder}
           disabled={disabled}
-          required={required}
-          {...props}
+          {...otherProps}
         ></textarea>
         <IconButton
           className={clsx(
@@ -56,4 +59,4 @@ export function Textarea({
       </span>
     </label>
   );
-}
+});

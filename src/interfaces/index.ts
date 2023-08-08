@@ -14,7 +14,7 @@ export interface Event {
   title: string;
   description?: string;
   datetime: number;
-  location?: string;
+  location: string;
   category: string;
   picture?: string;
   priority: string;

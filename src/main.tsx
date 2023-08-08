@@ -7,8 +7,7 @@ import { CreateEventPage } from './pages/CreateEventPage.tsx';
 import { EditEventPage } from './pages/EditEventPage.tsx';
 import { EventPage } from './pages/EventPage.tsx';
 import { HomePage } from './pages/HomePage.tsx';
-import { NotFoundPage } from './pages/NotFoundPage.tsx';
-import { StoryBook } from './pages/StoryBook.tsx';
+
 import { store } from './redux/eventsStore.ts';
 import './tailwind.css';
 
@@ -37,12 +36,8 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/storybook',
-    element: <StoryBook />,
-  },
-  {
     path: '*',
-    element: <NotFoundPage />,
+    element: <HomePage />,
   },
 ]);
 

@@ -16,7 +16,6 @@ export const HomePage = () => {
   const dispatch = useDispatch();
   const events = useSelector(selectFilteredEvents);
   const categoryFilter = useSelector(selectCategoryFilter);
-  console.log('🚧 events:', events);
 
   return (
     <>

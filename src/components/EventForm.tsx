@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useController, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CATEGORIES, PRIORITIES } from '../constants';
-import { getRandomPicrure } from '../helpers';
+import { getDefaultTime, getRandomPicrure } from '../helpers';
 import { Event } from '../interfaces';
 import { createEvent, updateEvent } from '../redux/eventsSlice';
 import { Button } from './Button';
@@ -19,45 +19,53 @@ interface EventFormProps {
   event?: Event;
 }
 
+type Inputs = Omit<Event, 'id'>;
+
 export function EventForm({ className, event }: EventFormProps) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [title, setTitle] = useState(event?.title ?? '');
-  const [description, setDescription] = useState(event?.description ?? '');
-  const [datetime, setDatetime] = useState(event?.datetime ?? Date.now());
-  const [location, setLocation] = useState(event?.location ?? '');
-  const [category, setCategory] = useState(event?.category ?? CATEGORIES[0]);
-  const [priority, setPriority] = useState(event?.priority ?? PRIORITIES[0]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    let newEvent: Event;
+  const {
+    register,
+    handleSubmit,
+    resetField,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>({
+    defaultValues: {
+      title: event?.title ?? '',
+      description: event?.description ?? '',
+      datetime: event?.datetime ?? getDefaultTime(),
+      location: event?.location ?? '',
+      category: event?.category ?? CATEGORIES[0],
+      picture: event?.picture ?? '',
+      priority: event?.priority ?? PRIORITIES[0],
+    },
+  });
+
+  const datetimeController = useController({
+    name: 'datetime',
+    control,
+  });
+  const categoryController = useController({
+    name: 'category',
+    control,
+  });
+  const priorityController = useController({
+    name: 'priority',
+    control,
+  });
+
+  const onSubmit = (data: Inputs) => {
+    const id = event?.id ? event?.id : nanoid();
+    const eventData = { ...data, id };
     if (event) {
-      newEvent = {
-        id: event.id,
-        title,
-        description,
-        datetime,
-        location,
-        category,
-        picture: event.picture,
-        priority,
-      };
-      dispatch(updateEvent(newEvent));
+      dispatch(updateEvent(eventData));
     } else {
-      newEvent = {
-        id: nanoid(),
-        title,
-        description,
-        datetime,
-        location,
-        category,
-        picture: getRandomPicrure({ seed: title }),
-        priority,
-      };
-      dispatch(createEvent(newEvent));
+      eventData.picture = getRandomPicrure(id);
+      dispatch(createEvent(eventData));
     }
-    navigate(`/events/${newEvent.id}`);
+    navigate(`/events/${id}`);
   };
 
   return (
@@ -66,45 +74,57 @@ export function EventForm({ className, event }: EventFormProps) {
         'bg-white px-4 py-10 shadow-md md:px-6 xl:px-10',
         className,
       )}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
     >
       <div className="mb-10 grid grid-cols-1 gap-5 md:grid-flow-col md:grid-cols-2 md:grid-rows-5 md:gap-x-6 xl:mb-15 xl:grid-cols-3 xl:grid-rows-3 xl:gap-x-10">
         <Input
           label="Title"
-          value={title}
-          required
-          onChange={e => setTitle(e.target.value)}
-          onClear={() => setTitle('')}
+          {...register('title', { required: true })}
+          onClear={() => resetField('title', { defaultValue: '' })}
+          error={errors.title ? 'Title is required' : ''}
         />
+
         <Textarea
           className="row-span-2"
           label="Description"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          onClear={() => setDescription('')}
+          {...register('description')}
+          onClear={() => resetField('description', { defaultValue: '' })}
         />
-        <DatePicker value={datetime} onChange={setDatetime} />
-        <TimePicker value={datetime} onChange={setDatetime} />
+
+        <DatePicker
+          value={datetimeController.field.value}
+          onChange={datetimeController.field.onChange}
+        />
+        <TimePicker
+          value={datetimeController.field.value}
+          onChange={datetimeController.field.onChange}
+        />
+
         <Input
           label="Location"
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-          onClear={() => setLocation('')}
+          {...register('location', { required: true })}
+          onClear={() => resetField('location', { defaultValue: '' })}
+          error={errors.location ? 'Location is required' : ''}
         />
+
         <Select
           label="Category"
-          value={category}
           options={CATEGORIES}
-          onChange={setCategory}
+          value={categoryController.field.value}
+          onChange={categoryController.field.onChange}
         />
+
         <Input label="Add picture" disabled />
+
         <Select
           label="Priority"
-          value={priority}
           options={PRIORITIES}
-          onChange={setPriority}
+          value={priorityController.field.value}
+          onChange={priorityController.field.onChange}
         />
       </div>
+
       <Button
         className="w-full md:ml-auto md:w-auto md:min-w-[190px]"
         type="submit"

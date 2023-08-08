@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { Event } from '../interfaces';
 
 export const MONTHES = [

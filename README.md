@@ -1,27 +1,33 @@
-# React + TypeScript + Vite
+# Event Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Event-planner](https://user-images.githubusercontent.com/105078220/235469498-e12ed0ce-70ae-409e-9e34-932c6557fb15.png)
 
-Currently, two official plugins are available:
+Event Planner is an app for planning events. The user can add new events, edit and delete the previous ones. There is a search option by categories and keywords. For more convenience, the events can be marked with a priority chip.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technology stack
 
-## Expanding the ESLint configuration
+- React
+- React Router
+- Redux Toolkit
+- Tailwind
+- Vite
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Run locally
 
-- Configure the top-level `parserOptions` property like this:
+Clone the project
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+  git clone https://github.com/marisereda/event-planner
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the app
+
+```bash
+  npm run dev
+```

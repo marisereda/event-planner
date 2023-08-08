@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { IconButton } from './IconButton';
 
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
@@ -8,25 +8,29 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
   onClear?: () => void;
 }
 
-export function Input({
-  className,
-  label,
-  error,
-  placeholder = 'Input',
-  disabled,
-  required,
-  onClear,
-  ...props
-}: InputProps) {
+export const Input = forwardRef(function Input(
+  props: InputProps,
+  ref: React.ForwardedRef<HTMLInputElement>,
+) {
+  const {
+    className,
+    label,
+    error,
+    placeholder = 'Input',
+    disabled,
+    onClear,
+    ...otherProps
+  } = props;
+
   return (
-    <label className={clsx('flex flex-col gap-2', className)}>
+    <label className={clsx(' flex flex-col gap-2', className)}>
       <span
         className={clsx(
           'leading-none transition-colors',
           disabled ? 'text-disabled' : 'text-accent',
         )}
       >
-        {required ? `${label} *` : label}
+        {label}
       </span>
       <span className="relative">
         <input
@@ -34,10 +38,10 @@ export function Input({
             'peer w-full rounded-md border bg-transparent px-3 py-4 outline-none transition-colors placeholder:text-current disabled:placeholder:text-disabled',
             error ? 'border-error' : 'border-divider focus:border-accent ',
           )}
+          ref={ref}
           placeholder={placeholder}
           disabled={disabled}
-          required={required}
-          {...props}
+          {...otherProps}
         />
         <IconButton
           className={clsx(
@@ -56,4 +60,4 @@ export function Input({
       </span>
     </label>
   );
-}
+});
