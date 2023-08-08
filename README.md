@@ -30,3 +30,5 @@ Start the app
 ```bash
   npm run dev
 ```
+## Live application
+[Event Planner](https://wondrous-licorice-a32fe5.netlify.app/)
