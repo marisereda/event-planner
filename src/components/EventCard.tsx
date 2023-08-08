@@ -48,15 +48,15 @@ export function EventCard({
         </div>
         <div className="h-[200px] bg-white p-4">
           <h3 className="mb-4 font-medium">{title}</h3>
-          <p className="line-clamp-3 text-sm">{description}</p>
+          <p className="mb-6 line-clamp-3 text-sm">{description}</p>
+          <Button
+            className="ml-auto opacity-0 transition-opacity group-hover:opacity-100"
+            onClick={() => navigate(`/events/${id}`)}
+          >
+            More info
+          </Button>
         </div>
       </div>
-      <Button
-        className="absolute bottom-4 right-4 ml-auto translate-y-4 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-        onClick={() => navigate(`/events/${id}`)}
-      >
-        More info
-      </Button>
     </div>
   );
 }
