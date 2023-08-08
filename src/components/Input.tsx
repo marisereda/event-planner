@@ -5,6 +5,7 @@ import { IconButton } from './IconButton';
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
   label: string;
   error?: string;
+  onClear?: () => void;
 }
 
 export function Input({
@@ -13,6 +14,8 @@ export function Input({
   error,
   placeholder = 'Input',
   disabled,
+  required,
+  onClear,
   ...props
 }: InputProps) {
   return (
@@ -23,7 +26,7 @@ export function Input({
           disabled ? 'text-disabled' : 'text-accent',
         )}
       >
-        {label}
+        {required ? `${label} *` : label}
       </span>
       <span className="relative">
         <input
@@ -33,6 +36,7 @@ export function Input({
           )}
           placeholder={placeholder}
           disabled={disabled}
+          required={required}
           {...props}
         />
         <IconButton
@@ -42,9 +46,10 @@ export function Input({
           )}
           icon="cross"
           disabled={disabled}
+          onClick={onClear}
         />
         {error && (
-          <span className="absolute right-0 text-xs translate-y-full -bottom-1 text-error">
+          <span className="absolute -bottom-1 right-0 translate-y-full text-xs text-error">
             {error}
           </span>
         )}

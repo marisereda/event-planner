@@ -1,22 +1,31 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { CATEGORY_ALL } from '../constants';
 import { RootState } from './eventsStore';
 
 export const selectEvents = (state: RootState) => state.events;
 
-// export const selectEventById = (state: RootState) => state.events.find(event => event.id === event);
 export const selectSearchKey = (state: RootState) => state.searchKey;
+
 export const selectCategoryFilter = (state: RootState) => state.categoryFilter;
 
-export const selectFilteredEvents = (state: RootState) => {
-  const searchKey = state.searchKey.toLowerCase();
-  return state.events.filter(event => {
-    const isSearchMatched =
-      event.title.toLowerCase().includes(searchKey) ||
-      event.description?.toLowerCase().includes(searchKey) ||
-      event.location?.toLowerCase().includes(searchKey);
-    const isCategoryMatched =
-      state.categoryFilter === CATEGORY_ALL ||
-      event.category.includes(state.categoryFilter);
-    return isSearchMatched && isCategoryMatched;
-  });
-};
+export const selectFilteredEvents = createSelector(
+  selectEvents,
+  selectCategoryFilter,
+  selectSearchKey,
+  (events, categoryFilter, searchKey) => {
+    const search = searchKey.toLowerCase();
+    const filteredEvents = events.filter(event => {
+      const isSearchMatched =
+        event.title.toLowerCase().includes(search) ||
+        event.description?.toLowerCase().includes(search) ||
+        event.location?.toLowerCase().includes(search);
+      const isCategoryMatched =
+        categoryFilter === CATEGORY_ALL ||
+        event.category.includes(categoryFilter);
+      return isSearchMatched && isCategoryMatched;
+    });
+    return filteredEvents.sort(
+      (event1, event2) => event1.datetime - event2.datetime,
+    );
+  },
+);

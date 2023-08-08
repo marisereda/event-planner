@@ -7,8 +7,8 @@ import { Time, TimeParts } from './Time';
 interface TimePickerProps {
   className?: string;
   label?: string;
-  value: Date;
-  onChange?: (value: Date) => void;
+  value: number;
+  onChange?: (value: number) => void;
 }
 
 export function TimePicker({
@@ -27,7 +27,7 @@ export function TimePicker({
     }
     newTime.setHours(newHours);
     newTime.setMinutes(minutes);
-    onChange?.(newTime);
+    onChange?.(newTime.getTime());
   };
 
   return (

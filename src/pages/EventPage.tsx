@@ -1,15 +1,10 @@
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { BackLink } from '../components/BackLink';
 import { EventDetails } from '../components/EventDetails';
 import { Title } from '../components/Title';
-import { RootState } from '../redux/eventsStore';
+import { useEventFromId } from '../hooks/useEventFromId';
 
 export const EventPage = () => {
-  const { id } = useParams();
-  const event = useSelector((state: RootState) =>
-    state.events.find(event => id === event.id),
-  );
+  const event = useEventFromId();
 
   return (
     <div className="bg bg-cover">

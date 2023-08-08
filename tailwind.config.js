@@ -5,7 +5,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     backgroundImage: {
-      DEFAULT: 'url(bg.svg)',
+      DEFAULT: 'url(/bg.svg)',
     },
     boxShadow: {
       sm: '2px 4px 9px 0px rgba(166, 141, 174, 0.28)',

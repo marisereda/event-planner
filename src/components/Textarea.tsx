@@ -5,6 +5,7 @@ import { IconButton } from './IconButton';
 interface TextareaProps extends ComponentPropsWithoutRef<'textarea'> {
   label: string;
   error?: string;
+  onClear?: () => void;
 }
 
 export function Textarea({
@@ -13,6 +14,8 @@ export function Textarea({
   error,
   placeholder = 'Input',
   disabled,
+  required,
+  onClear,
   ...props
 }: TextareaProps) {
   return (
@@ -23,25 +26,27 @@ export function Textarea({
           disabled ? 'text-disabled' : 'text-accent',
         )}
       >
-        {label}
+        {required ? `${label} *` : label}
       </span>
       <span className="relative grow">
         <textarea
           className={clsx(
-            'peer h-full w-full resize-none rounded-md border bg-transparent px-3 py-4 outline-none transition-colors placeholder:text-current disabled:placeholder:text-disabled',
+            'peer h-full w-full resize-none rounded-md border bg-transparent py-4 pl-3 pr-5 outline-none transition-colors placeholder:text-current disabled:placeholder:text-disabled',
             error ? 'border-error' : 'border-divider focus:border-accent ',
           )}
           placeholder={placeholder}
           disabled={disabled}
+          required={required}
           {...props}
         ></textarea>
         <IconButton
           className={clsx(
-            'absolute right-3 top-4',
+            'absolute right-3 top-3',
             error ? 'text-error' : 'text-accent',
           )}
           icon="cross"
           disabled={disabled}
+          onClick={onClear}
         />
         {error && (
           <span className="absolute -bottom-1 right-0 translate-y-full text-xs text-error">

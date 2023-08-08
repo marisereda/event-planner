@@ -60,7 +60,7 @@ export function Calendar({ className, selectedDate, onSelect }: CalendarProps) {
         />
       </div>
 
-      <ul className="grid grid-cols-7 py-2 text-xs text-center gap-y-1">
+      <ul className="grid grid-cols-7 gap-y-1 py-2 text-center text-xs">
         {WEEKDAYS.map(weekday => (
           <li key={weekday} className="first:text-high last:text-high">
             {weekday}
@@ -68,7 +68,7 @@ export function Calendar({ className, selectedDate, onSelect }: CalendarProps) {
         ))}
       </ul>
 
-      <ul className="grid grid-cols-7 text-xs text-center select-none gap-y-1 text-divider">
+      <ul className="grid select-none grid-cols-7 gap-y-1 text-center text-xs text-divider">
         {Array(skipDays)
           .fill(undefined)
           .map((_, i) => (
