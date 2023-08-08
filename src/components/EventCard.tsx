@@ -28,7 +28,7 @@ export function EventCard({
   return (
     <div
       className={clsx(
-        'group relative overflow-hidden rounded-xl pb-[144px] shadow-sm',
+        'group relative overflow-hidden rounded-xl bg-white pb-[144px] shadow-sm',
         className,
       )}
     >
